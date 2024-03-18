@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/swcrc",
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true,
+      "decorators": true,
+      "dynamicImport": true
+    },
+
+    "transform": {
+      "react": {
+        "runtime": "automatic",
+        "pragma": "React.createElement",
+        "pragmaFrag": "React.Fragment"
+      },
+      "legacyDecorator": true,
+      "decoratorMetadata": true
+    },
+    "target": "es5"
+  },
+  "module": {
+    "type": "es6"
+  }
+}
