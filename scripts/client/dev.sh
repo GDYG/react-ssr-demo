@@ -10,6 +10,7 @@ cross-env \
   API=$API \
   ENVIRONMENT=$ENVIRONMENT \
   PORT=$PORT \
+  ENV=$ENV \
   webpack \
-  --mode production \
+  --mode development \
   --config config/webpack.client.js \

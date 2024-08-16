@@ -7,6 +7,8 @@ import {
 } from "react-router-dom/server";
 import routes from "../src/router";
 import createFetchRequest from "./helpers/request";
+import fs from "fs";
+import path from "path";
 
 export default function (app) {
   app.use(async (ctx, next) => {
@@ -22,37 +24,58 @@ export default function (app) {
 
     let router = createStaticRouter(dataRoutes, context);
     let html = renderToString(
-      <StaticRouterProvider
-        router={router}
-        context={context}
-        nonce="the-nonce"
-      />
+      <React.StrictMode>
+        <StaticRouterProvider
+          router={router}
+          context={context}
+          nonce="the-nonce"
+        />
+      </React.StrictMode>
     );
 
     ctx.body = htmlTemplate(html);
   });
 }
 
-function htmlTemplate(serverRenderedContent) {
+function htmlTemplate(
+  serverRenderedContent,
+  scripts: string[] = [],
+  styles: string[] = []
+) {
   const json = JSON.stringify({ page: "server" });
-  return `
-    <!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>SSR RENDER</title>
-      </head>
-      <body>
-        <script>
-          //向客户端渲染传递数据
-          window.__context__ = ${json}
-        </script>
-        <div id="root">${serverRenderedContent}</div>
-        <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
-        <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
-        <script src="/bundle.js"></script>
-      </body>
-    </html>
-  `;
+
+  let htmlContent = fs.readFileSync(
+    path.resolve("src/public/index.html"),
+    "utf-8"
+  );
+
+  // 定义要添加的脚本内容
+  const scriptContent = `<script>window.__context__ = ${json}</script>`;
+  const replaceRootContent = `<div id="root">${serverRenderedContent}</div>`;
+  htmlContent = htmlContent.replace(
+    '<div id="root"></div>',
+    replaceRootContent
+  );
+
+  if (styles?.length) {
+    insertContentByHtmlTag(htmlContent, "</head>", styles.join(""));
+  }
+
+  const insertContents = scriptContent + scripts.join("");
+  // + `<script type="module" src="./entry.client.tsx"></script>`;
+  return insertContentByHtmlTag(htmlContent, "</body>", insertContents);
+}
+
+function insertContentByHtmlTag(
+  htmlContent: string,
+  html: string,
+  content: string
+) {
+  const startIndex = htmlContent.indexOf(html);
+
+  if (startIndex === -1) return `Could not find ${html} tag in the HTML file.`;
+
+  const newHtmlContent =
+    htmlContent.slice(0, startIndex) + content + htmlContent.slice(startIndex);
+  return newHtmlContent;
 }

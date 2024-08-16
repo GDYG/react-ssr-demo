@@ -11,6 +11,7 @@ cross-env \
   API=$API \
   ENVIRONMENT=$ENVIRONMENT \
   PORT=$PORT \
+  ENV=$ENV \
   webpack \
   --mode production \
   --config config/webpack.common.js \

@@ -1,10 +1,10 @@
 const path = require("path");
 const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   resolve: {
@@ -13,15 +13,11 @@ module.exports = {
       "@": path.resolve(__dirname, "../src"),
     },
   },
-  // externals: {
-  //   react: "React",
-  //   "react-dom": "ReactDOM",
-  // },
   module: {
     rules: [
       {
         test: /\.(js|jsx|ts|tsx)$/,
-        exclude: /node_modules\/(?!node-fetch)/,
+        // exclude: /node_modules\/(?!node-fetch)/,
         use: {
           loader: "swc-loader",
         },
@@ -52,29 +48,15 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.ProgressPlugin(),
-    new Dotenv({ path: path.resolve("env", ".dev.env") }),
-    new CleanWebpackPlugin(),
-    // new HtmlWebpackPlugin({
-    //   template: "./src/public/index.html",
-    //   filename: "./index.html",
+    // new BundleAnalyzerPlugin({
+    //   openAnalyzer: true,
     // }),
+    new webpack.ProgressPlugin(),
+    new Dotenv({ path: path.resolve("env", process.env.ENV) }),
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "assets/styles/[name].css",
       chunkFilename: "assets/styles/[id].css",
     }),
-    // new CopyWebpackPlugin({
-    //   patterns: [
-    //     {
-    //       from: path.resolve(__dirname, "../src", "assets/images"),
-    //       to: "assets/images",
-    //     },
-    //   ],
-    // }),
-    // new webpack.DefinePlugin({
-    // "process.env": {
-    //   NODE_ENV: JSON.stringify("production"),
-    // },
-    // }),
   ],
 };

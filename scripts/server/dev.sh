@@ -7,6 +7,7 @@ echo "ENVIRONMENT: $ENVIRONMENT"
 
 cross-env \
   ENVIRONMENT=$ENVIRONMENT \
+  ENV=$ENV \
   webpack \
   --mode development \
-  --config config/webpack.server.js \
+  --config config/webpack.server.js

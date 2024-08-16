@@ -4,6 +4,8 @@ import Home from "./pages/Home";
 const { json, useLoaderData } = require("react-router-dom");
 
 const Layout = () => {
+  let data = useLoaderData();
+  console.log("server log", data);
   return (
     <div>
       <Outlet />
@@ -14,18 +16,13 @@ const Layout = () => {
 const routes: RouteObject[] = [
   {
     path: "/",
-    // element: <Layout />,
+    element: <Layout />,
     loader() {
       return json({ message: "Welcome to React Router!" });
     },
-    Component() {
-      let data = useLoaderData();
-      console.log(12123, data);
-      return <Layout />;
-    },
     children: [
       {
-        path: "",
+        path: "home?",
         index: true,
         element: <Home />,
       },

@@ -1,22 +1,15 @@
 import routes from "@/router";
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-import Home from "./Home";
-import About from "./About";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-function App() {
-  // console.log("client render", (window as any).__context__);
-  const handleClick = (e: any) => {
-    console.log(21312323123, e);
-  };
-  return (
-    <div onClick={handleClick}>
-      <Routes>
-        <Route path="/" element={<Home></Home>} />
-        <Route path="/about" element={<About></About>} />
-      </Routes>
-    </div>
-  );
+const routing = createBrowserRouter(routes, {
+  basename: "/",
+});
+
+function App(props: { __context__: string }) {
+  console.log(2222222, props);
+
+  return <RouterProvider router={routing} />;
 }
 
 export default App;

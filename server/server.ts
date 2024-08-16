@@ -4,7 +4,7 @@ import renderReact from "./server.entry";
 import path from "path";
 
 const app = new koa();
-app.use(staticPath(path.join(__dirname, "../public")));
+app.use(staticPath(path.join(__dirname, "../build/public")));
 
 renderReact(app);
 
