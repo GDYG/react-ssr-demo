@@ -4,8 +4,9 @@
   "main": "./build/index.js",
   "license": "MIT",
   "scripts": {
+    "dev": "yarn dev:csr && yarn dev:ssr && yarn start",
+    "dev:ssr": "yarn server:dev",
     "dev:csr": "yarn client:dev",
-    "dev:ssr": "yarn server:dev && yarn start",
     "client:dev": "scripty",
     "server:dev": "scripty",
     "start": "nodemon",

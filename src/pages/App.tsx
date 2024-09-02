@@ -6,10 +6,14 @@ const routing = createBrowserRouter(routes, {
   basename: "/",
 });
 
-function App(props: { __context__: string }) {
+function App(props: { page: string }) {
   console.log(2222222, props);
 
-  return <RouterProvider router={routing} />;
+  return (
+    <>
+      <RouterProvider router={routing} />
+    </>
+  );
 }
 
 export default App;

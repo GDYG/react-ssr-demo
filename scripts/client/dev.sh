@@ -13,4 +13,4 @@ cross-env \
   ENV=$ENV \
   webpack \
   --mode development \
-  --config config/webpack.client.js \
+  --config config/webpack.client.js

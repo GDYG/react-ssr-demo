@@ -9,7 +9,7 @@ module.exports = merge(common, {
   // devtool: "inline-source-map",
   entry: path.resolve(__dirname, "../src/client.entry.tsx"),
   output: {
-    path: path.resolve(__dirname, "../public"),
+    path: path.resolve("build/public"),
     filename: "bundle.js",
     // publicPath: "/",
     // chunkFilename: "scripts/[name].[hash:5].js",

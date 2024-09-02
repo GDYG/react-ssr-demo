@@ -9,7 +9,7 @@ const serverConfig = {
   mode: "development",
   entry: path.resolve(__dirname, "../server/index.ts"),
   output: {
-    path: path.resolve(process.cwd(), "build"),
+    path: path.resolve("build"),
     filename: "index.js",
   },
   externals: [

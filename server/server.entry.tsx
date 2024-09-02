@@ -49,7 +49,10 @@ function htmlTemplate(
     "utf-8"
   );
 
+  const bundlePath = "/bundle.js";
+
   // 定义要添加的脚本内容
+  scripts.push(`<script src="${bundlePath}"></script>`);
   const scriptContent = `<script>window.__context__ = ${json}</script>`;
   const replaceRootContent = `<div id="root">${serverRenderedContent}</div>`;
   htmlContent = htmlContent.replace(

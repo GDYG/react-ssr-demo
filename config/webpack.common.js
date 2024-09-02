@@ -53,10 +53,12 @@ module.exports = {
     // }),
     new webpack.ProgressPlugin(),
     new Dotenv({ path: path.resolve("env", process.env.ENV) }),
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ["**/*", "!public/**"],
+    }),
     new MiniCssExtractPlugin({
-      filename: "assets/styles/[name].css",
-      chunkFilename: "assets/styles/[id].css",
+      filename: "assets/styles/[name].[hash:6].css",
+      chunkFilename: "assets/styles/[id].[hash:6].css",
     }),
   ],
 };

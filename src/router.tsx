@@ -1,6 +1,7 @@
 import { Outlet, RouteObject } from "react-router-dom";
 import About from "./pages/About";
 import Home from "./pages/Home";
+import LayoutNav from "./pages/LayoutNav";
 const { json, useLoaderData } = require("react-router-dom");
 
 const Layout = () => {
@@ -8,7 +9,9 @@ const Layout = () => {
   console.log("server log", data);
   return (
     <div>
-      <Outlet />
+      <LayoutNav>
+        <Outlet />
+      </LayoutNav>
     </div>
   );
 };
